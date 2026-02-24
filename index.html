@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match-3 Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #game-board { display: grid; grid-template-columns: repeat(8, 50px); grid-gap: 5px; }
+        .cell { width: 50px; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Match-3 Game</h1>
+    <div id="game-board"></div>
+
+    <script>
+        const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
+        const board = [];
+        const boardSize = 8;
+
+        function createBoard() {
+            const gameBoard = document.getElementById('game-board');
+            for (let i = 0; i < boardSize; i++) {
+                const row = [];
+                for (let j = 0; j < boardSize; j++) {
+                    const cell = document.createElement('div');
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    cell.style.backgroundColor = color;
+                    cell.className = 'cell';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.addEventListener('click', () => handleCellClick(i, j));
+                    gameBoard.appendChild(cell);
+                    row.push(color);
+                }
+                board.push(row);
+            }
+        }
+
+        function handleCellClick(row, col) {
+            // Logic to handle cell click for matching
+            // Add your matching logic here
+            alert(`Cell at (${row}, ${col}) clicked!`);
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

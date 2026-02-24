@@ -3,48 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match-3 Game</title>
+    <title>Match-3 Puzzle Game</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #game-board { display: grid; grid-template-columns: repeat(8, 50px); grid-gap: 5px; }
-        .cell { width: 50px; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+        #scoreboard {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>Match-3 Game</h1>
-    <div id="game-board"></div>
-
+    <div id="scoreboard">Score: 0</div>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
     <script>
-        const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
-        const board = [];
-        const boardSize = 8;
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const rows = 8;
+        const cols = 8;
+        const gemColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
+        let board = [];
+        let score = 0;
 
-        function createBoard() {
-            const gameBoard = document.getElementById('game-board');
-            for (let i = 0; i < boardSize; i++) {
-                const row = [];
-                for (let j = 0; j < boardSize; j++) {
-                    const cell = document.createElement('div');
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    cell.style.backgroundColor = color;
-                    cell.className = 'cell';
-                    cell.dataset.row = i;
-                    cell.dataset.col = j;
-                    cell.addEventListener('click', () => handleCellClick(i, j));
-                    gameBoard.appendChild(cell);
-                    row.push(color);
+        function initializeBoard() {
+            for (let r = 0; r < rows; r++) {
+                board[r] = [];
+                for (let c = 0; c < cols; c++) {
+                    board[r][c] = Math.floor(Math.random() * gemColors.length);
                 }
-                board.push(row);
             }
         }
 
-        function handleCellClick(row, col) {
-            // Logic to handle cell click for matching
-            // Add your matching logic here
-            alert(`Cell at (${row}, ${col}) clicked!`);
+        function drawBoard() {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    ctx.fillStyle = gemColors[board[r][c]];
+                    ctx.fillRect(c * 75, r * 75, 70, 70);
+                    ctx.strokeStyle = '#000';
+                    ctx.strokeRect(c * 75, r * 75, 70, 70);
+                }
+            }
         }
 
-        createBoard();
+        function detectMatches() {
+            // Logic for detecting matches of 3 or more gems.
+        }
+
+        function swapGems() {
+            // Logic for swapping gems and checking for matches.
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('scoreboard').innerText = `Score: ${score}`;
+        }
+
+        function gameOver() {
+            // Logic for game over condition.
+        }
+
+        canvas.addEventListener('click', (event) => {
+            // Click event to swap gems.
+        });
+
+        initializeBoard();
+        drawBoard();
     </script>
 </body>
 </html>
